@@ -16,7 +16,7 @@ class MoviesController < ApplicationController
     @selected_sort = (params[:sort] || session[:selected_sort] || nil) 
 
     @all_ratings = Movie.all_ratings
-    @ratings_to_show = []
+    @ratings_to_show = Movie.all_ratings
     @ratings_to_show = @selected_ratings.keys if @selected_ratings != nil
     @movies = Movie.with_ratings(@ratings_to_show)
     
