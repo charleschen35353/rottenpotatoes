@@ -21,12 +21,12 @@ class MoviesController < ApplicationController
     session[:selected_sort] = @selected_sort
     
     if @selected_sort == "title"
-      @titleCSS = "bg-warning"
+      @titleCSS = "hilite bg-warning"
       @release_dateCSS = ""
       @movies = @movies.order(title: :asc)
     elsif @selected_sort== "release_date"
       @titleCSS = ""
-      @release_dateCSS = "bg-warning"
+      @release_dateCSS = "hilite bg-warning"
       @movies = @movies.order(release_date: :asc)
     end 
 
