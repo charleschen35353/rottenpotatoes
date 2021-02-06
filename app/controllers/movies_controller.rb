@@ -17,8 +17,10 @@ class MoviesController < ApplicationController
     
     if params[:sort] == "title"
       @titleCSS = "bg-warning"
+      @release_dateCSS = ""
       @movies = @movies.order(title: :asc)
     elsif params[:sort] == "release_date"
+      @titleCSS = ""
       @release_dateCSS = "bg-warning"
       @movies = @movies.order(release_date: :asc)
     end 
