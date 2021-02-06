@@ -1,5 +1,7 @@
 class MoviesController < ApplicationController
-
+  
+  helper_method :sort_column, :sort_direction
+  
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
@@ -8,9 +10,19 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
-    @ratings_to_show = {} 
+    @ratings_to_show = []
     @ratings_to_show = params[:ratings].keys if params[:ratings] != nil
     @movies = Movie.with_ratings(@ratings_to_show)
+    
+    
+    if params[:sort] == "title"
+      @titleCSS = "bg-warning"
+      @movies = @movies.order(title: :asc)
+    elsif params[:sort] == "release_date"
+      @release_dateCSS = "bg-warning"
+      @movies = @movies.order(release_date: :asc)
+    end 
+    
   end
 
   def new
@@ -45,7 +57,14 @@ class MoviesController < ApplicationController
   # Making "internal" methods private is not required, but is a common practice.
   # This helps make clear which methods respond to requests, and which ones do not.
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
+    params.require(:movie).permit(:title, :rating, :description, :release_date, :sort, :direction)
   end
-
+  
+  def sort_column
+    Movie.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 end
