@@ -9,9 +9,6 @@ class MoviesController < ApplicationController
   end
 
   def index
-    redirect_to(movies_path(:ratings => session[:selected_ratings])) if (session[:selected_ratings] and not params[:ratings])
-    #redirect_to(movies_path(:sort => session[:selected_sort])) if (session[:selected_sort] and not params[:sort])
-    
     @selected_ratings = (params[:ratings] || session[:selected_ratings] || {})
     @selected_sort = (params[:sort] || session[:selected_sort] || nil) 
 
