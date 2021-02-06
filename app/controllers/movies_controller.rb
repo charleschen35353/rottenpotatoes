@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
 
     @all_ratings = Movie.all_ratings
     @ratings_to_show = Movie.all_ratings
-    @ratings_to_show = @selected_ratings.keys if @selected_ratings != nil
+    @ratings_to_show = @selected_ratings.keys if @selected_ratings.size > 0
     @movies = Movie.with_ratings(@ratings_to_show)
     
     session[:selected_ratings] = @selected_ratings
